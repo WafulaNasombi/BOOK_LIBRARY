@@ -12,7 +12,7 @@ class AuthorController extends Controller
     public function index()
     {
         $authors = Author::all();
-        return view('<api>authors.index', ['authors' => $authors]) ;
+        return view('authors.index', ['authors' => $authors]) ;
     }
 
     public function show($id)
