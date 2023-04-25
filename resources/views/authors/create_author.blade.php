@@ -4,17 +4,18 @@
 
 @section('content')
     <h1>Create Author</h1>
-    <form action="/authors" method="POST">
-        @csrf
-        <label for="fname">First Name:</label>
-        <input type="text" id="fname" name="fname"><br>
+    <form method="POST" action="/author">
+    @csrf
+    <label for="FirstName">First Name:</label>
+    <input type="text" name="FirstName" id="FirstName">
+    <br>
+    <label for="LastName">Last Name:</label>
+    <input type="text" name="LastName" id="LastName">
+    <br>
+    <label for="author_id">Id:</label>
+    <input type="id" name="id" value="{{$author->id}}">
+    <br>
+    <button type="submit">Create Author</button>
+</form>
 
-        <label for="lname">Last Name:</label>
-        <input type="text" id="lname" name="lname"><br>
-
-        <label for="id">ID:</label>
-        <input type="text" id="id" name="id"><br>
-
-        <button type="submit">Create</button>
-    </form>
 @endsection
