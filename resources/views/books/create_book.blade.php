@@ -2,24 +2,33 @@
 
 @section('content')
     <h1>Create New Book</h1>
-    <form action="/api/book" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="title">Title:</label>
-            <input type="text" class="form-control" id="title" name="title">
-        </div>
-        <div class="form-group">
-            <label for="author_id">Author:</label>
-            <select class="form-control" id="author_id" name="author_id">
-                @foreach($authors as $author)
-                    <option value="{{ $author->id }}">{{ $author->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="publication_date">Publication Date:</label>
-            <input type="date" class="form-control" id="publication_date" name="publication_date">
-        </div>
-        <button type="submit" class="btn btn-primary">Create</button>
-    </form>
+    <form method="POST" action="/book">
+    @csrf
+
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" name="title" id="title" required>
+    </div>
+
+    <div>
+      <label for="author_id">Id:</label>
+      <select name="author_id" id="author_id" required>
+        @foreach ($authors as $author)
+          <option value="{{ $author->id }}">{{ $author->first_name }} {{ $author->last_name }}</option>
+        @endforeach
+      </select>
+    </div>
+
+    <div>
+      <label for="isbn">ISBN:</label>
+      <input type="text" name="isbn" id="isbn" required>
+    </div>
+
+    <div>
+      <label for="publication_date">Publication Date:</label>
+      <input type="date" name="publication_date" id="publication_date" required>
+    </div>
+
+    <button type="submit">Create Book</button>
+  </form>
 @endsection
