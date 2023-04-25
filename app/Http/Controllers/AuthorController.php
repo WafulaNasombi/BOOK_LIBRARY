@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use Illuminate\Http\Request;
-use App\Http\Requests\AuthorResource;
 
 
 class AuthorController extends Controller
@@ -23,17 +22,11 @@ class AuthorController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'fname' => 'required',
-            'lname' => 'required',
-            'id'=>'required'
-        ]);
-
-        $author = new Author;
-        $author->fname = $validatedData['fname'];
-        $author->lname = $validatedData['lname'];
-        $author->id =$validatedData['id'];
-        $author->save();
+      $author = new Author;
+      $author->FirstName = $request->input('FirstName');
+      $author->LastName = $request->input('LastName');
+      $author->id = $request->input('id');
+      $author->save();
 
         return redirect()->route('authors.show', ['author' => $author->id])->with('success', 'Author created successfully!');
 
@@ -43,9 +36,9 @@ class AuthorController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'fname' => 'required',
-            'lname' => 'required',
-            'id' => 'required|unique:authors,id,'.$id.'|numeric',
+            'FirstName' => 'required',
+            'LastName' => 'required',
+            'author_id' => 'required|unique:authors,id,'.$id.'|numeric',
         ],
           [
             'id.unique' => 'The ID must be unique.',
@@ -54,12 +47,13 @@ class AuthorController extends Controller
     
         // update author in database
         $author = Author::findOrFail($id);
-        $author->fname = $request->input('fname');
-        $author->lname = $request->input('lname');
+        $author->FirstName = $request->input('FirstName');
+        $author->LastName = $request->input('LastName');
         $author->id = $request->input('id');
         $author->save();
     
-        return redirect('/authors')->with('success', 'Author updated successfully!');
+        return response()->json(['message' => 'Author updated successfully']);
+
     
     }
 }
