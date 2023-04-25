@@ -12,12 +12,7 @@
     </nav>
     <div>
         @yield('content')
-     @include('authors.create_author')
-     @include('authors.authorid')
-     @include('authors.update_author')
-     @include('books.bookid')
-     @include('books.create_book')
-     @include('books.update_book')
+    
         
     </div>
 </body>
