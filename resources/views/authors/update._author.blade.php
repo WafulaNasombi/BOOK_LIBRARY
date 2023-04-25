@@ -6,13 +6,19 @@
   <form method="POST" action="/authors/{{ $author->id }}">
     @csrf
     @method('PUT')
-    <div>
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" value="{{ $author->name }}" required>
+    
+<div>
+    <label for="FirstName">First Name:</label>
+    <input type="text" name="FirstName" id="FirstName">
     </div>
 
     <div>
-      <label for="id">id:</label>
+    <label for="LastName">Last Name:</label>
+    <input type="text" name="LastName" id="LastName">
+</div>
+
+ <div>
+      <label for="author_id">id:</label>
       <input type="id"  name="id" value="{{ $author->id }}" required>
     </div>
 
