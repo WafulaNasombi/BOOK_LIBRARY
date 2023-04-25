@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->unsignedBigInteger('author_id');
-            $table->string('name');
+            $table->string('FirstName');
+            $table->string('LastName');
             $table->timestamps();
         });
     }
