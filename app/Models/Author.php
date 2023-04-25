@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 class Author extends Model
 {
     
-    protected $primaryKey = 'AuthorsId';
+    protected $primaryKey = 'id';
     
     protected $fillable=[
         'author_id',
-        'fname',
-        'lname',
-        'book_list',
+        'FirstName',
+        'LastName',
+        
     ];
      
     
