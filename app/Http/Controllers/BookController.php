@@ -17,25 +17,34 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $book = Book::findOrFail($id);
-        return view('bookid.show', ['book' => $book]);
+        $book = Book::with ('author')->findOrFail($id);
+        return view('books.show', ['book' => $book]);
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'author_fname' => 'required',
-            'author_lname'=>'required'
-        ]);
+       
+    $validatedData = $request->validate([
+        'Title' => 'required|max:255',
+        'isbn' => 'required|max:255',
+        'published_date' => 'required|date',
+        'AuthorsId' => 'required|integer',
+    ]);
 
-        $book = new Book;
-        $book->title = $validatedData['title'];
-        $book->author_fname = $validatedData['author_fname'];
-        $book->author_lname = $validatedData['author_lname'];
-        $book->save();
+    
+    $book = new Book;
+    $book->Title = $validatedData['Title'];
+    $book->isbn = $validatedData['isbn'];
+    $book->published_date = $validatedData['published_date'];
+    $book->AuthorsId = $validatedData['AuthorsId'];
+    $book->save();
 
-        return redirect('/books');
+
+    return response()->json([
+        'message' => 'Book created successfully',
+        'book' => $book
+    ], 201);
+
         
     }
 
@@ -43,39 +52,24 @@ class BookController extends Controller
     {
         $book = Book::findOrFail($id);
 
-        // Check if the book exists
-        if (!$book) {
-            return response()->json([
-                'message' => 'Book not found'
-            ], 404);
-        }
-    
-        // Validate the request data
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'title' => 'required|max:255',
             'author_id' => 'required|exists:authors,id',
+            'isbn' => 'required|unique:books,isbn,'.$book->id,
+            'publication_date'=>'required',
             
         ]);
-    
-        // Return validation errors if any
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 400);
-        }
-    
-        // Update the book with the new data
-        $book->title = $request->input('title');
-        $book->author_id = $request->input('author_id');
+
+        $book->title = $validatedData['title'];
+        $book->author_id = $validatedData['author_id'];
+        $book->isbn = $validatedData['isbn'];
+        $book->publication_date =$validatedData['publication_date'];
         $book->save();
-    
-        // Return the updated book as JSON
-        return response()->json([
-            'message' => 'Book updated successfully',
-            'data' => $book
-        ], 200); 
+
+        return response()->json(['message' => 'Book updated successfully']);
+    }
     }
 
     
     
-}
+
