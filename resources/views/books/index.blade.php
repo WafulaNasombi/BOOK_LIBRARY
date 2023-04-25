@@ -4,11 +4,12 @@
   <h1>Books</h1>
   <ul>
     @foreach($books as $book)
-      @php 
-        $author = App\Models\Author::find($book->AuthorsId);
+    @php 
+        $author = App\Models\Author::find($book->author_id);
       @endphp
-      <li>{{ $book->Title }} by {{ $author->FirstName }} {{ $author->LastName }} {{ $book->isbn }}</li>
+      <li>{{ $book->Title }}  {{ $book->isbn }}{{ $book->id }}</li>
     @endforeach
   </ul>
 @endsection
+
 
